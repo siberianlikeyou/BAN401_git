@@ -5,10 +5,10 @@ Problem 2
 def range_replacement(start, stop):
     """
     This is a recursive function to replace the range() function
-    as the problem does not allow the use this built-in function.
+    as the problem does not allow the use of this built-in function.
 
-    This takes the start parameter which indicates the starting number
-    of the range, and the stop parameter which indicates what number
+    This takes the "start" parameter which indicates the starting number
+    of the range, and the "stop" parameter which indicates what number
     we want to create the list up to (but not including).
 
     The function returns a list with "stop" number of elements,
@@ -17,11 +17,10 @@ def range_replacement(start, stop):
 
     if stop == start:  # Base-case: check if stop is equal to start
         return[]       # If so, reached base-case: stop recursion
-    # If number is not 0, recurse (call function again)
-    # with number-1 and add
+    # If number is not 0, return the [stop-1] as list value
+    # and recurse (call function again) with (stop-1) as "stop" argument
     return range_replacement(start, stop-1) + [stop-1]
 
-print(range_replacement(1,4))
 
 def selectionSort(my_list):
     """
@@ -37,20 +36,20 @@ def selectionSort(my_list):
     """
 
     # Start for loop iterating over length of list
-    for i in range(len(my_list)):
+    for i in range_replacement(0, len(my_list)):
 
         # Store current element i as minPosition
         minPosition = i
 
         # Start for loop iterating over all elements of list after i
-        for j in range(i+1, len(my_list)):
+        for j in range_replacement(i+1, len(my_list)):
             if my_list[minPosition] > my_list[j]:   # If this element is larger than current element j
-                minPosition = j                 # Save current index as new minPosition
+                minPosition = j                     # Save current index as new minPosition
 
         # Swap the found minimum element with minPosition
-        temp = my_list[i]                 # Store the to-be-swapped element
+        temp = my_list[i]                   # Store the to-be-swapped element
         my_list[i] = my_list[minPosition]   # Replace element at minPosition to position i
-        my_list[minPosition] = temp       # Put the temporary element in the slot of the minPosition number
+        my_list[minPosition] = temp         # Put the temporary element in the slot of the minPosition number
 
     return(my_list) # Return the sorted list
 
@@ -68,13 +67,13 @@ def get_the_chain(numberlist):
     sorted_list = selectionSort(sorted_list) # Sort the new list
 
 
-    maxlength = 0
+    maxlength = 0           # Create variable to store longest chain so far
     chain_list = []         # Create empty list to store chains
-    active_chain = False    # Create boolean variable to control
+    active_chain = False    # Create boolean variable to store if currently on chain
     temp_chain = []         # Create empty list to store temporary chain
 
 
-    for i in range(len(sorted_list)-1):
+    for i in range_replacement(0,len(sorted_list)-1):
 
         # Check if current element is 1 lower than next element in list
         if sorted_list[i] == sorted_list[i+1]-1:
@@ -117,9 +116,7 @@ def get_the_chain(numberlist):
             chain_list.append(temp_chain)
             maxlength = len(temp_chain)
 
-
-    return(chain_list[-1])
- #   print(chain_list[-1])
+    return(chain_list[-1]) # Return the longest chain
 
 # Run with test data:
 numbers = [0, 7, 4, 8, 1, 3, 8, 10, 11, 2, 5, 12, 9]
