@@ -31,7 +31,7 @@ class Student:
                 # Add group(s) to the print variable
                 group_print = group_print + "  - " + group + "\n"
         else: # No group membership
-            group_print = "N/A"
+            group_print = "N/A\n"
 
         # Specify printable return in correct format
         return f"Retrieving data for student {self.firstName} {self.lastName} (student ID {self.id})\n"+ \
@@ -39,134 +39,137 @@ class Student:
             f"- Major: {self.major} \n" +\
             f"- NHHS Group membership: \n{group_print}"
 
-    # Create class property to get printable version of student information
+    # Create class method to get printable version of student information
     # to be used in list view with multiple students
-    @property
     def listView(self):
         return f"{self.firstName} {self.lastName} (ID {self.id})"
 # End of class Student
 
-def helper_add(value, id):
+def helper_add(student_list):
     """
-    Helper function to add search terms (keys and values) to the
-    search dictionary.
-    Takes the ID from the student_dictionary to be used as value in search_dict,
-    and "value" which would be the search term to be used as a key in search_dict.
-    No return, just adds the key:value pair if the key didn't exist,
-    or appends it to the list of values if the key already exists (i.e. multiple
-    students with the same first/last name)
+    Helper function to enter data into search_dict.
+    Param student_list is a supplied list of student objects.
+    Has no return, just populates search_dict.
     """
-    # If key does not already exist:
-    if value not in search_dict:
-        search_dict[value] = [id]     # Add to search_dict
-    else: # If key already exists
-        search_dict[value].append(id) # Append to existing list
 
-# Create dict with all student objects
-student_dict = {
-    19710 : Student(19710, "Mike", "Wheeler", 3.5, "FIE", ["it.gruppen"]),
-    19670 : Student(19670, "Nancy", "Wheeler", 3.6, "ENE", ["K7 Bulletin", "NHHS Opptur", "NHHS Energi"]),
-    19660 : Student(19660, "Steve", "Harrington", 2.4, "STR" ),
-    18119 : Student(18119, "Mike", "Wazowski", 2.9, "BAN"),
-    69420 : Student(69420, "Jeffrey", "Lebowski", 4.2, "BLZ", ["NHHI Bowling", "NHHI Vinum"]),
-    12345 : Student(12345, "Ivan", "Belik", 1.8, "BAN", ["it.gruppen", "NHHS Consulting"]),
-    11007 : Student(11007, "Sterling", "Archer", 2.7, "MBM", ["NHHI Lacrosse"])
-}
+    def add_check(key, value):
+        """
+        Helper function to check if someone with same name(s) or ID already exists,
+        then add it accordingly.
+        Key parameter: the student object to add
+        Value parameter: the name(or ID) to check if already exists in
+        the search_dict
+        Has no return, adds key:value pair if key didn't exist,
+        or appends it to list of objects if key already exists (i.e.
+        multiple students with same first/last name)
+        """
+        if value not in search_dict:
+            search_dict[value] = [key]     # Add to search_dict as first element of list
+        else: # If key already exists
+            search_dict[value].append(key) # Append to existing list
 
-# Create empty search dictionary
-search_dict = dict()
-
-# Adding entries to search_dict, with all searchable terms
-# (first name, last name, first name and last name in any order,
-# and finally student ID.
-#for id in student_dict:
-#    helper_add(student_dict[id].firstName, id)
-#    helper_add(student_dict[id].lastName, id)
-#    helper_add(student_dict[id].firstName + " " + student_dict[id].lastName, id)
-#    helper_add(student_dict[id].lastName + " " + student_dict[id].firstName, id)
-#    helper_add(id, id)
-
-for id in student_dict:
-    helper_add(student_dict[id].firstName, student_dict[id])
-    helper_add(student_dict[id].lastName, student_dict[id])
-    helper_add(student_dict[id].firstName + " " + student_dict[id].lastName, student_dict[id])
-    helper_add(student_dict[id].lastName + " " + student_dict[id].firstName, student_dict[id])
-    helper_add(id, student_dict[id])
-
-# ------------------ MAIN - fiks
+    # Adding all search parameters as keys to search_dict using add_check
+    for student in student_list:
+        add_check(student, student.firstName)
+        add_check(student, student.lastName)
+        add_check(student, student.firstName + " " + student.lastName)
+        add_check(student, student.lastName + " " + student.firstName)
+        add_check(student, student.id)
 
 def search_function(user_search):
+    """
+    Search function to be called from main program.
+    Searches the search_dict for student, and if multiple matches
+    let's user choose. Function also validates input at every step.
+    Param user_search: search string to search search_dict for.
+    Returns: Search result as f-string (printable)
+    """
     try:
+        # Look if search input is in search_dict
         search_result = search_dict[user_search]
     except KeyError:
         return("No matches found.")
-    else:
+    else: # Found a match in search_dict:
+        # Check if 1 or multiple matches
         if len(search_result) == 1:
-            print("Søkeres:")
-            print(search_result)
+            # If only 1 result, return it:
             return(f"----------------\n"
                    f"One match found. \n" +
                    f"----------------\n" +
-                   f"{student_dict[search_result[0]]}")
+                   f"{search_result[0]}")
+        # If several results:
         else:
             print(f"Several results matched your query:")
-            index = 1
+            index = 1 # Create counter to index results
             for id in search_result:
-                print(f"{index}. {student_dict[id].listView}")
-                index += 1
+                # Print each result
+                print(f"{index}. {id.listView()}")
+                index += 1 # Increase counter every loop
 
-            input_control = True
+            input_control = True # Variable for flow control of while loop
             while input_control:
                 user_choice = (input("Enter the number of the search result for " + \
-                                        "which you want to retrieve the info or \n enter" + \
-                                        " 'all' to print info for all matching results\n"))
+                                "which you want to retrieve the info \nor enter" + \
+                                " 'all' to print info for all matching results\n"))
+                # Check if user wants all results
                 if user_choice.lower() == "all":
-                    print(f"All search results: ")
-                    for id in search_result:
-                        print(f"{student_dict[id]}")
+                    print(f"All {len(search_result)} search results: \n"+
+                          "----------------")
+                    for id in search_result: # print all results
+                        print(f"{id}"
+                              "----------------")
                     input_control = False
-                    return("----------------\n")
+                    return("End of results.\n") # end function
+
                 else:
-                    try:
-                        user_choice = int(user_choice)
-                        if user_choice < 1:
+                    try: # Validate that user typed valid index
+                        user_choice = int(user_choice) # Check for integer
+                        if user_choice < 1:  # Check for positive integer
                             raise ValueError
+                        # Positive integer input: check that input is
+                        # one of the numbers displayed in the list
                         chosen_student = search_result[user_choice-1]
-                    except IndexError:
+                    except IndexError: # If positive integer is higher than list
                         print("Incorrect input. Please try again.")
-                    except ValueError:
+                    except ValueError: # Other invalid inputs (letters, negative numbers)
                         print("Incorrect input. Please try again, with a number.")
-                    else:
-                        return(student_dict[chosen_student])
-                        input_control = False
-# HER ER BERRE TEST: 
-print("Test")
-search_res = (search_dict["Nancy"])
-print(search_res)
-print(str(search_dict[19670]))
-print(student_dict[19670])
-#print(student_dict[19670])
-print("TEST SLUTT------------")
-for i in search_dict:
-    print("Printer key:")
-    print(i)
-    print("Printer value:")
-    print(search_dict[i])
-
-#search_function("Mike")
+                    else: # Return chosen result
+                        return(f"----------------\n{chosen_student}"
+                               f"----------------")
+                        input_control = False  # Turn off flow control
+            # End of while loop
 
 
-run_program = False  # ENDRE DENNE ---
+
+# Input student list of student objects
+student_list = [
+    Student("19710", "Mike", "Wheeler", 3.5, "FIE", ["it.gruppen"]),
+    Student("19670", "Nancy", "Wheeler", 3.6, "ENE", ["K7 Bulletin", "NHHS Opptur", "NHHS Energi"]),
+    Student("19660", "Steve", "Harrington", 2.4, "STR"),
+    Student("18119", "Mike", "Wazowski", 2.9, "BAN"),
+    Student("69420", "Jeffrey", "Lebowski", 4.2, "BLZ", ["NHHI Bowling", "NHHI Vinum"]),
+    Student("12345", "Ivan", "Belik", 1.8, "BAN", ["it.gruppen", "NHHS Consulting"]),
+    Student("11007", "Sterling", "Archer", 2.7, "MBM", ["NHHI Lacrosse"])
+]
+
+search_dict = dict()     # Create empty search dictionary
+helper_add(student_list) # Populate search dictionary
+
+# Start of main program
+run_program = True # Flow control variable for main program loop
 while run_program:
-    user_search = input("Who are you looking for?\n").capitalize()
-    print(search_function(user_search))
-
+    user_search = input("Who are you looking for?\n").title()
+    print(search_function(user_search)) # Call search function
+    # Inner while loop to validate input after search is done
     while run_program:
-        search_again = input("Would you like to search again? (y/n)\n")
+        search_again = input("Would you like to make a new search? (y/n)\n")
         if search_again.lower() == "y":
-            break
+            break # return to outer loop for new search
         elif search_again.lower() == "n":
             print("Exiting the program...")
-            run_program = False
-        else:
-            print("Incorrect input. Please try again.")
+            run_program = False # Turn of flow control to end program
+        else: # Any other input than "y" or "n"
+            print("----------------\n"+
+                  "Incorrect input. Please try again.\n"+
+                  "----------------")
+
