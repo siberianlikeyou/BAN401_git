@@ -48,7 +48,7 @@ def selectionSort(my_list):
 
     return(my_list) # Return the sorted list
 
-
+# End of function selectionSort()
 
 
 def get_the_chain(numberlist):
@@ -61,102 +61,74 @@ def get_the_chain(numberlist):
     """
 
 
-    def end_chain(maxlength):
+    def end_chain():
+        """
+        Inner helper function to end current chain.
+        Does not have a return, but adds current number to the temporary chain
+        before checking if temp_chain is of equal length or longer to current
+        longest chain, and if so adds it to chain_list.
+        """
+        # Declare nonlocal variables to access these from
+        # outer function (get_the_chain)
+        nonlocal maxlength
+        nonlocal active_chain
+        nonlocal temp_chain
 
         if active_chain:
-            print("Ja aktiv")
-            # Add last number number to chain list
-            temp_chain.append(sorted_list[-1])
-            # Check if the current chain is longer than previous longest
+            # Add current number to temp_chain
+            temp_chain.append(sorted_list[i])
+            # If current chain is longer or equal to current longest
             if len(temp_chain) >= maxlength:
                 # Append current chain to list of chains
                 chain_list.append(temp_chain)
+                # Update maxlength with new max length
                 maxlength = len(temp_chain)
+        # Turn off active_chain variable
+        active_chain = False
+        # Clear temp_chain
+        temp_chain = []
 
-    # END OF FUNCTION
+    # End of function end_chain()
+
     maxlength = 0  # Create variable to store longest chain so far
     sorted_list = list(numberlist)           # Create a copy of the original list
     sorted_list = selectionSort(sorted_list) # Sort the new list
-
-
 
     chain_list = []         # Create empty list to store chains
     active_chain = False    # Create boolean variable to store if currently on chain
     temp_chain = []         # Create empty list to store temporary chain
 
     i = 0        # Create flow control variable
+    # Starting while loop to find chains
     while i < len(sorted_list)-1:
 
         # Check if current element is 1 lower than next element in list
         if sorted_list[i] == sorted_list[i+1]-1:
             # Append current value to the nested list of chains
             temp_chain.append(sorted_list[i])
-            # Set active_chain to true
-            active_chain = True
-
+            active_chain = True # Set active_chain to true
         # Check if current element is duplicate of next element
         elif sorted_list[i] == sorted_list[i+1]:
             i +=1    # increase flow control
             continue # skip and go to next iteration of while loop
-
         # If next number is not in chain
         else:
-            # Check if there is currently an active chain
-            if active_chain:
-                # Add current number to chain list
-                temp_chain.append(sorted_list[i])
-
-                # Check if the current chain is longer than previous longest
-                if len(temp_chain) >= maxlength:
-                    # Append current chain to list of chains
-                    chain_list.append(temp_chain)
-                    maxlength = len(temp_chain)
-
-
-                # Clear temporary chain list
-                temp_chain = []
-                # Turn off active_chain
-                active_chain = False
+            end_chain()
 
         i += 1 # increase flow control
 
-    # Out of while loop: Check the last number in list
-    # Check if there is currently an active chain
- #   if active_chain:
- #       # Add last number number to chain list
- #       temp_chain.append(sorted_list[-1])
- #       # Check if the current chain is longer than previous longest
- #       if len(temp_chain) >= maxlength:
- #           # Append current chain to list of chains
- #           chain_list.append(temp_chain)
- #           maxlength = len(temp_chain)
-
-    end_chain(maxlength)
-
+    # Out of while loop: Check final element of list
+    end_chain()
     return(chain_list[-1]) # Return the longest chain
 
-
+# End of function get_the_chain()
 
 # Run with test data:
-#numbers = [0, 7, 4, 8, 1, 3, 8, 10, 11, 2, 5, 12, 9]
-numbers = [0, 7, 4, 8, 1, 3, 8, 10, 11, 2, 5, 12, 9, 88,89,90,91,92,93,94, 20,21,22,23,24,25,26,27,28]
+numbers = [0, 7, 4, 8, 1, 3, 8, 10, 11, 2, 5, 12, 9]
+
 # Print original list
 print(f"Example numbers: {numbers}")
 # Print longest chain returned from get_the_chain function
 print(f"Longest chain: {get_the_chain(numbers)}")
 
-
-
-
-def outside():
-    test_var = True
-    outsideList = [1, 2]
-    def nested():
-        if test_var == True:
-            print("Ja")
-        outsideList.append(3)
-    nested()
-    print(outsideList)
-
-outside()
 
