@@ -119,16 +119,19 @@ def get_the_chain(numberlist):
 
     # Out of while loop: Check final element of list
     end_chain()
-    return(chain_list[-1]) # Return the longest chain
+    # Check if there are any chains
+    if chain_list:
+        return(chain_list[-1]) # Return the longest chain
+    else:
+        return("There are no chains")
 
 # End of function get_the_chain()
 
 # Run with test data:
-numbers = [0, 7, 4, 8, 1, 3, 8, 10, 11, 2, 5, 12, 9]
-
+#numbers = [0, 7, 4, 8, 1, 3, 8, 10, 11, 2, 5, 12, 9]
+numbers = [2, 6, 15, 0, 19, 55]
 # Print original list
 print(f"Example numbers: {numbers}")
 # Print longest chain returned from get_the_chain function
 print(f"Longest chain: {get_the_chain(numbers)}")
-
 
