@@ -79,14 +79,19 @@ search_dict = dict()
 # Adding entries to search_dict, with all searchable terms
 # (first name, last name, first name and last name in any order,
 # and finally student ID.
+#for id in student_dict:
+#    helper_add(student_dict[id].firstName, id)
+#    helper_add(student_dict[id].lastName, id)
+#    helper_add(student_dict[id].firstName + " " + student_dict[id].lastName, id)
+#    helper_add(student_dict[id].lastName + " " + student_dict[id].firstName, id)
+#    helper_add(id, id)
+
 for id in student_dict:
-    helper_add(student_dict[id].firstName, id)
-    helper_add(student_dict[id].lastName, id)
-    helper_add(student_dict[id].firstName + " " + student_dict[id].lastName, id)
-    helper_add(student_dict[id].lastName + " " + student_dict[id].firstName, id)
-    helper_add(id, id)
-
-
+    helper_add(student_dict[id].firstName, student_dict[id])
+    helper_add(student_dict[id].lastName, student_dict[id])
+    helper_add(student_dict[id].firstName + " " + student_dict[id].lastName, student_dict[id])
+    helper_add(student_dict[id].lastName + " " + student_dict[id].firstName, student_dict[id])
+    helper_add(id, student_dict[id])
 
 # ------------------ MAIN - fiks
 
@@ -97,6 +102,8 @@ def search_function(user_search):
         return("No matches found.")
     else:
         if len(search_result) == 1:
+            print("Søkeres:")
+            print(search_result)
             return(f"----------------\n"
                    f"One match found. \n" +
                    f"----------------\n" +
@@ -132,8 +139,21 @@ def search_function(user_search):
                     else:
                         return(student_dict[chosen_student])
                         input_control = False
+# HER ER BERRE TEST: 
+print("Test")
+search_res = (search_dict["Nancy"])
+print(search_res)
+print(str(search_dict[19670]))
+print(student_dict[19670])
+#print(student_dict[19670])
+print("TEST SLUTT------------")
+for i in search_dict:
+    print("Printer key:")
+    print(i)
+    print("Printer value:")
+    print(search_dict[i])
 
-
+#search_function("Mike")
 
 
 run_program = False  # ENDRE DENNE ---
