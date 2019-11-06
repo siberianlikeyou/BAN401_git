@@ -2,32 +2,13 @@
 Problem 2
 """
 
-def range_replacement(start, stop):
-    """
-    This is a recursive function to replace the range() function
-    as the problem does not allow the use of this built-in function.
-
-    This takes the "start" parameter which indicates the starting number
-    of the range, and the "stop" parameter which indicates what number
-    we want to create the list up to (but not including).
-
-    The function returns a list with "stop" number of elements,
-    going from "start" until (stop-1) in increments of 1.
-    """
-
-    if stop == start:  # Base-case: check if stop is equal to start
-        return[]       # If so, reached base-case: stop recursion
-    # If number is not 0, return the [stop-1] as list value
-    # and recurse (call function again) with (stop-1) as "stop" argument
-    return range_replacement(start, stop-1) + [stop-1]
-
 
 def selectionSort(my_list):
     """
     The selection sort looks for the largest value as it makes a pass,
     and after completing the pass, places it in the proper location.
 
-    Source for SelectionSort code is from:
+    Main source for SelectionSort code is from:
     https://www.pythoncentral.io/selection-sort-implementation-guide/
 
     Parameter: new_list, a list to be sorted.
@@ -35,27 +16,35 @@ def selectionSort(my_list):
     argument, it does not return a new, sorted list.
     """
 
-    # Start for loop iterating over length of list
-    #for i in range_replacement(0, len(my_list)):
+    # Creating outer flow control variable for outer while loop
     outer_flow_control = 0
+    # Starting while loop
     while outer_flow_control < len(my_list):
 
         # Store current element i as minPosition
         minPosition = outer_flow_control
 
-        # Start for loop iterating over all elements of list after i
-        #for j in range_replacement(flow+1, len(my_list)):
-        inner_flow_control = outer_flow_control+1
-        while inner_flow_control < len(my_list):
-            if my_list[minPosition] > my_list[inner_flow_control]:   # If this element is larger than current element j
-                minPosition = inner_flow_control                     # Save current index as new minPosition
-            inner_flow_control += 1
-        # Swap the found minimum element with minPosition
-        temp = my_list[outer_flow_control]                   # Store the to-be-swapped element
-        my_list[outer_flow_control] = my_list[minPosition]   # Replace element at minPosition to position i
-        my_list[minPosition] = temp         # Put the temporary element in the slot of the minPosition number
 
-        outer_flow_control += 1
+        # Create flow control for inner while loop
+        inner_flow_control = outer_flow_control+1
+        # Start inner while loop iterating over all elements of list after current element
+        # of outer while loop
+        while inner_flow_control < len(my_list):
+            # Check if minPos element is larger than current element in inner loop
+            if my_list[minPosition] > my_list[inner_flow_control]:
+                # Save current index as new minPosition
+                minPosition = inner_flow_control
+            inner_flow_control += 1 # Increase inner flow control to continue loop
+        # After inner loop is done:
+        # Swap the found minimum element with minPosition:
+        # Store the to-be-swapped element
+        temp = my_list[outer_flow_control]
+        # Replace element at minPosition to position of outer loop
+        my_list[outer_flow_control] = my_list[minPosition]
+        # Put the temporary element in the slot of the minPosition number
+        my_list[minPosition] = temp
+
+        outer_flow_control += 1 # Increase outer flow control to continue loop
 
     return(my_list) # Return the sorted list
 
@@ -78,8 +67,10 @@ def get_the_chain(numberlist):
     active_chain = False    # Create boolean variable to store if currently on chain
     temp_chain = []         # Create empty list to store temporary chain
 
+    i = 0        # Create flow control variable
+    while i < len(sorted_list)-1:
 
-    for i in range_replacement(0,len(sorted_list)-1):
+        #for i in range_replacement(0,len(sorted_list)-1):
 
         # Check if current element is 1 lower than next element in list
         if sorted_list[i] == sorted_list[i+1]-1:
@@ -109,6 +100,8 @@ def get_the_chain(numberlist):
                 temp_chain = []
                 # Turn off active_chain
                 active_chain = False
+        i += 1
+
 
 
     # Out of for-loop: Check the last number in list
