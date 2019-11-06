@@ -128,8 +128,8 @@ def get_the_chain(numberlist):
 # End of function get_the_chain()
 
 # Run with test data:
-#numbers = [0, 7, 4, 8, 1, 3, 8, 10, 11, 2, 5, 12, 9]
-numbers = [2, 6, 15, 0, 19, 55]
+numbers = [0, 7, 4, 8, 1, 3, 8, 10, 11, 2, 5, 12, 9]
+
 # Print original list
 print(f"Example numbers: {numbers}")
 # Print longest chain returned from get_the_chain function
