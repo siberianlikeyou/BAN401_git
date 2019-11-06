@@ -70,8 +70,6 @@ def get_the_chain(numberlist):
     i = 0        # Create flow control variable
     while i < len(sorted_list)-1:
 
-        #for i in range_replacement(0,len(sorted_list)-1):
-
         # Check if current element is 1 lower than next element in list
         if sorted_list[i] == sorted_list[i+1]-1:
             # Append current value to the nested list of chains
@@ -81,7 +79,9 @@ def get_the_chain(numberlist):
 
         # Check if current element is duplicate of next element
         elif sorted_list[i] == sorted_list[i+1]:
-            continue # skip and go to next iteration of for loop
+            i +=1    # increase flow control
+            continue # skip and go to next iteration of while loop
+
         # If next number is not in chain
         else:
             # Check if there is currently an active chain
@@ -100,11 +100,10 @@ def get_the_chain(numberlist):
                 temp_chain = []
                 # Turn off active_chain
                 active_chain = False
-        i += 1
 
+        i += 1 # increase flow control
 
-
-    # Out of for-loop: Check the last number in list
+    # Out of while loop: Check the last number in list
     # Check if there is currently an active chain
     if active_chain:
         # Add last number number to chain list
