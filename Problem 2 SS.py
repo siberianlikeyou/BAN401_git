@@ -131,4 +131,3 @@ print(f"Example numbers: {numbers}")
 # Print longest chain returned from get_the_chain function
 print(f"Longest chain: {get_the_chain(numbers)}")
 
-
