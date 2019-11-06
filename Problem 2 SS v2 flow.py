@@ -49,6 +49,8 @@ def selectionSort(my_list):
     return(my_list) # Return the sorted list
 
 
+
+
 def get_the_chain(numberlist):
     """
     This function takes parameter numbers: a list of integers
@@ -58,11 +60,26 @@ def get_the_chain(numberlist):
     the one with the highest starting value.
     """
 
+
+    def end_chain(maxlength):
+
+        if active_chain:
+            print("Ja aktiv")
+            # Add last number number to chain list
+            temp_chain.append(sorted_list[-1])
+            # Check if the current chain is longer than previous longest
+            if len(temp_chain) >= maxlength:
+                # Append current chain to list of chains
+                chain_list.append(temp_chain)
+                maxlength = len(temp_chain)
+
+    # END OF FUNCTION
+    maxlength = 0  # Create variable to store longest chain so far
     sorted_list = list(numberlist)           # Create a copy of the original list
     sorted_list = selectionSort(sorted_list) # Sort the new list
 
 
-    maxlength = 0           # Create variable to store longest chain so far
+
     chain_list = []         # Create empty list to store chains
     active_chain = False    # Create boolean variable to store if currently on chain
     temp_chain = []         # Create empty list to store temporary chain
@@ -105,22 +122,41 @@ def get_the_chain(numberlist):
 
     # Out of while loop: Check the last number in list
     # Check if there is currently an active chain
-    if active_chain:
-        # Add last number number to chain list
-        temp_chain.append(sorted_list[-1])
-        # Check if the current chain is longer than previous longest
-        if len(temp_chain) >= maxlength:
-            # Append current chain to list of chains
-            chain_list.append(temp_chain)
-            maxlength = len(temp_chain)
+ #   if active_chain:
+ #       # Add last number number to chain list
+ #       temp_chain.append(sorted_list[-1])
+ #       # Check if the current chain is longer than previous longest
+ #       if len(temp_chain) >= maxlength:
+ #           # Append current chain to list of chains
+ #           chain_list.append(temp_chain)
+ #           maxlength = len(temp_chain)
+
+    end_chain(maxlength)
 
     return(chain_list[-1]) # Return the longest chain
 
+
+
 # Run with test data:
-numbers = [0, 7, 4, 8, 1, 3, 8, 10, 11, 2, 5, 12, 9]
+#numbers = [0, 7, 4, 8, 1, 3, 8, 10, 11, 2, 5, 12, 9]
+numbers = [0, 7, 4, 8, 1, 3, 8, 10, 11, 2, 5, 12, 9, 88,89,90,91,92,93,94, 20,21,22,23,24,25,26,27,28]
 # Print original list
 print(f"Example numbers: {numbers}")
 # Print longest chain returned from get_the_chain function
 print(f"Longest chain: {get_the_chain(numbers)}")
 
+
+
+
+def outside():
+    test_var = True
+    outsideList = [1, 2]
+    def nested():
+        if test_var == True:
+            print("Ja")
+        outsideList.append(3)
+    nested()
+    print(outsideList)
+
+outside()
 
