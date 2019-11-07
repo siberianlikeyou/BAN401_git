@@ -114,11 +114,11 @@ def search_function(user_search):
             while input_control:
                 user_choice = \
                     (input("Enter the number of the search result for "
-                    "which you want to retrieve the info\n or enter" 
+                    "which you want to retrieve the info \nor enter" 
                     " 'all' to print info for all matching results\n"))
                 # Check if user wants all results
                 if user_choice.lower() == "all":
-                    print(f"All {len(search_result)} search results: \n"
+                    print(f"Printing {len(search_result)} results: \n"
                           "----------------")
                     for student in search_result: # print all results
                         print(f"{student}"
