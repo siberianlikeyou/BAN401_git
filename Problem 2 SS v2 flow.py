@@ -64,9 +64,9 @@ def get_the_chain(numberlist):
     def end_chain():
         """
         Inner helper function to end current chain.
-        Does not have a return, but adds current number to the temporary chain
-        before checking if temp_chain is of equal length or longer to current
-        longest chain, and if so adds it to chain_list.
+        Does not have a return, but adds current number to the temporary
+        chain before checking if temp_chain is of equal length or longer
+        to current longest chain, and if so adds it to chain_list.
         """
         # Declare nonlocal variables to access these from
         # outer function (get_the_chain)
@@ -91,11 +91,11 @@ def get_the_chain(numberlist):
     # End of function end_chain()
 
     maxlength = 0  # Create variable to store longest chain so far
-    sorted_list = list(numberlist)           # Create a copy of the original list
+    sorted_list = list(numberlist)           # Copy of input list
     sorted_list = selectionSort(sorted_list) # Sort the new list
 
     chain_list = []         # Create empty list to store chains
-    active_chain = False    # Create boolean variable to store if currently on chain
+    active_chain = False    # Create boolean var to control temp chain
     temp_chain = []         # Create empty list to store temporary chain
 
     i = 0        # Create flow control variable

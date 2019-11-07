@@ -5,10 +5,12 @@ class Student:
     """
     Student object.
     Arguments:
-        Self-explanatory, properties of students given in the problem description.
+        Self-explanatory, properties of students given in the problem
+        description.
     Returns:
-        No returns, but has __str__ for printable representation of student information and
-        listView property for printable representation to be used in lists with multiple students.
+        No returns, but has __str__ for printable representation of
+        student information and listView property for printable
+        representation to be used in lists with multiple students.
     """
     # Initializing variables to be stored in Student object
     def __init__(self, id, firstName, lastName, GPA, major, groups =[]):
@@ -21,7 +23,7 @@ class Student:
         self.major = major
         self.groups = groups
 
-    # Using str magic method to create printable representation of Student
+    # Using str magic method to create printable representation of object
     def __str__(self):
         # Creating printable version of group membership
         group_print = str()
@@ -34,7 +36,8 @@ class Student:
             group_print = "N/A\n"
 
         # Specify printable return in correct format
-        return f"Retrieving data for student {self.firstName} {self.lastName} (student ID {self.id})\n"+ \
+        return f"Retrieving data for student {self.firstName} " +\
+            f"{self.lastName} (student ID {self.id})\n" + \
             f"- GPA: {self.GPA} \n" + \
             f"- Major: {self.major} \n" +\
             f"- NHHS Group membership: \n{group_print}"
@@ -54,18 +57,19 @@ def helper_add(student_list):
 
     def add_check(key, value):
         """
-        Helper function to check if someone with same name(s) or ID already exists,
-        then add it accordingly.
+        Helper function to check if someone with same name(s) or ID
+        already exists, then add it accordingly.
         Key parameter: the student object to add
         Value parameter: the name(or ID) to check if already exists in
-        the search_dict
+        the search_dict.
         Has no return, adds key:value pair if key didn't exist,
         or appends it to list of objects if key already exists (i.e.
         multiple students with same first/last name)
         """
         if value not in search_dict:
-            search_dict[value] = [key]     # Add to search_dict as first element of list
-        else: # If key already exists
+            # Add to search_dict as first element of list
+            search_dict[value] = [key]
+        else:                              # If key already exists
             search_dict[value].append(key) # Append to existing list
 
     # Adding all search parameters as keys to search_dict using add_check
@@ -94,8 +98,8 @@ def search_function(user_search):
         if len(search_result) == 1:
             # If only 1 result, return it:
             return(f"----------------\n"
-                   f"One match found. \n" +
-                   f"----------------\n" +
+                   f"One match found. \n" 
+                   f"----------------\n" 
                    f"{search_result[0]}")
         # If several results:
         else:
@@ -108,15 +112,16 @@ def search_function(user_search):
 
             input_control = True # Variable for flow control of while loop
             while input_control:
-                user_choice = (input("Enter the number of the search result for " + \
-                                "which you want to retrieve the info \nor enter" + \
-                                " 'all' to print info for all matching results\n"))
+                user_choice = \
+                    (input("Enter the number of the search result for "
+                    "which you want to retrieve the info\n or enter" 
+                    " 'all' to print info for all matching results\n"))
                 # Check if user wants all results
                 if user_choice.lower() == "all":
-                    print(f"All {len(search_result)} search results: \n"+
+                    print(f"All {len(search_result)} search results: \n"
                           "----------------")
-                    for id in search_result: # print all results
-                        print(f"{id}"
+                    for student in search_result: # print all results
+                        print(f"{student}"
                               "----------------")
                     input_control = False
                     return("End of results.\n") # end function
@@ -129,10 +134,13 @@ def search_function(user_search):
                         # Positive integer input: check that input is
                         # one of the numbers displayed in the list
                         chosen_student = search_result[user_choice-1]
-                    except IndexError: # If positive integer is higher than list
+                    # If positive integer is higher than list
+                    except IndexError:
                         print("Incorrect input. Please try again.")
-                    except ValueError: # Other invalid inputs (letters, negative numbers)
-                        print("Incorrect input. Please try again, with a number.")
+                    # Other invalid inputs (letters, negative numbers)
+                    except ValueError:
+                        print("Incorrect input. Please try again, with "
+                              "a number.")
                     else: # Return chosen result
                         return(f"----------------\n{chosen_student}"
                                f"----------------")
