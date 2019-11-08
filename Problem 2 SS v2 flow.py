@@ -21,7 +21,7 @@ def selectionSort(my_list):
     # Starting while loop
     while outer_flow_control < len(my_list):
 
-        # Store current element i as minPosition
+        # Store current element (outer_flow_control) as minPosition
         minPosition = outer_flow_control
 
 
