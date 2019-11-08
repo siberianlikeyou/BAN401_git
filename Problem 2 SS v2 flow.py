@@ -131,7 +131,7 @@ def get_the_chain(numberlist):
 numbers = [0, 7, 4, 8, 1, 3, 8, 10, 11, 2, 5, 12, 9]
 
 # Print original list
-print(f"Example numbers: {numbers}")
+print(f"Initial list of numbers: {numbers}")
 # Print longest chain returned from get_the_chain function
 print(f"Longest chain: {get_the_chain(numbers)}")
 
