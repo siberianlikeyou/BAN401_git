@@ -17,34 +17,34 @@ def selectionSort(my_list):
     """
 
     # Creating outer flow control variable for outer while loop
-    outer_flow_control = 0
+    i = 0
     # Starting while loop
-    while outer_flow_control < len(my_list):
+    while i < len(my_list):
 
-        # Store current element (outer_flow_control) as minPosition
-        minPosition = outer_flow_control
+        # Store current element (i) as minPosition
+        minPosition = i
 
 
         # Create flow control for inner while loop
-        inner_flow_control = outer_flow_control+1
+        j = i+1
         # Start inner while loop iterating over all elements of list after current element
         # of outer while loop
-        while inner_flow_control < len(my_list):
+        while j < len(my_list):
             # Check if minPos element is larger than current element in inner loop
-            if my_list[minPosition] > my_list[inner_flow_control]:
+            if my_list[minPosition] > my_list[j]:
                 # Save current index as new minPosition
-                minPosition = inner_flow_control
-            inner_flow_control += 1 # Increase inner flow control to continue loop
+                minPosition = j
+            j += 1 # Increase inner flow control to continue loop
         # After inner loop is done:
         # Swap the found minimum element with minPosition:
         # Store the to-be-swapped element
-        temp = my_list[outer_flow_control]
+        temp = my_list[i]
         # Replace element at minPosition to position of outer loop
-        my_list[outer_flow_control] = my_list[minPosition]
+        my_list[i] = my_list[minPosition]
         # Put the temporary element in the slot of the minPosition number
         my_list[minPosition] = temp
 
-        outer_flow_control += 1 # Increase outer flow control to continue loop
+        i += 1 # Increase outer flow control to continue loop
 
     return(my_list) # Return the sorted list
 
