@@ -29,9 +29,7 @@ class Student:
         group_print = str()
         # If student is a member of any groups
         if self.groups:
-            for group in self.groups:
-                # Add group(s) to the print variable
-                group_print = group_print + "  - " + group + "\n"
+            group_print = "  - " + " \n  - ".join(self.groups)
         else: # No group membership
             group_print = "N/A\n"
 
@@ -40,7 +38,10 @@ class Student:
             f"{self.lastName} (student ID {self.id})\n" + \
             f"- GPA: {self.GPA} \n" + \
             f"- Major: {self.major} \n" +\
-            f"- NHHS Group membership: \n{group_print}"
+            f"- NHHS Group membership: \n" +\
+            (group_print)
+
+
 
     # Create class method to get printable version of student information
     # to be used in list view with multiple students
@@ -142,7 +143,7 @@ def search_function(user_search):
                         print("Incorrect input. Please try again, with "
                               "a number.")
                     else: # Return chosen result
-                        return(f"----------------\n{chosen_student}"
+                        return(f"----------------\n{chosen_student}\n"
                                f"----------------")
                         input_control = False  # Turn off flow control
             # End of while loop
